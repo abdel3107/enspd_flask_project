@@ -1,0 +1,39 @@
+{% extends 'home_teacher.html' %}
+
+{% block bodyContent %}
+<div class="main-panel">
+    <div class="align-items-center">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Creation d'un nouveau cours</h4>
+                    <p class="card-description"> Veuillez remplir le formulaire </p>
+                      <span style="color: red">{{ msg }}</span>
+                    <form class="forms-sample" action="{{ url_for('createCours') }}" method="post">
+                        <div class="form-group">
+                          <label for="institution">Choisisses l'institution</label>
+                          <select class="js-example-basic-single" name="institution" id="institution" style="width:100%">
+                              {% for institution in institutions %}
+                                <option value="{{ institution.get_id() }}">{{ institution.get_name() }}</option>
+                              {% endfor %}
+                          </select>
+                    </div>
+                      <div class="form-group">
+                        <label for="title">Intitule</label>
+                        <input type="text" class="form-control" id="title" name="title" placeholder="Exemple: MODELISATION UML">
+                      </div>
+                      <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea class="form-control" id="description" name="description" rows="4"></textarea>
+{#                          {% count = 200 %}#}
+{#                          <span>word characters: {{ 230 }}</span>#}
+                      </div>
+                      <button type="submit" class="btn btn-primary mr-2" name="submit" id="submit">Soumettre</button>
+{#                      <button class="btn btn-dark">Cancel</button>#}
+                    </form>
+                  </div>
+                </div>
+              </div>
+    </div>
+</div>
+{% endblock %}

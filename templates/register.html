@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Register</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='corona/assets/vendors/mdi/css/materialdesignicons.min.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='corona/assets/vendors/css/vendor.bundle.base.css')}}">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='corona/assets/css/style.css')}}">
+    <!-- End layout styles -->
+{#    <link rel="shortcut icon" href="{{ url_for('static', filename='corona/assets/images/favicon.png')}}" />#}
+  </head>
+  <body>
+    <div class="container-scroller">
+      <div class="container-fluid page-body-wrapper full-page-wrapper">
+        <div class="row w-100 m-0">
+          <div class="content-wrapper full-page-wrapper d-flex align-items-center auth login-bg">
+            <div class="card col-lg-4 mx-auto">
+              <div class="card-body px-5 py-5">
+                <h3 class="card-title text-left mb-3">Creer un compte</h3>
+
+{#                  <form action="{{ url_for('register') }}" method="POST">#}
+{##}
+{#                      <div class="dropdown show">#}
+{#                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">#}
+{#                          Choisir role: *  <span class="current-selection"></span>#}
+{#                        </button>#}
+{#                        <div class="dropdown-menu show" aria-labelledby="dropdownMenuButton1" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, -207px, 0px);" x-placement="top-start">#}
+{#                          <a class="dropdown-item" href="#" data-role="Etudiant">Etudiant</a>#}
+{#                          <a class="dropdown-item" href="#" data-role="Enseignant">Enseignant</a>#}
+{#                          <a class="dropdown-item" href="#" data-role="Admin d'une institution">Admin d'une institution</a>#}
+{#                          <div class="dropdown-divider"></div>#}
+{#                        </div>#}
+{#                      </div>#}
+{#                      <script>#}
+{#                          const selectedRoleInput = document.getElementById('selectedRoleInput');#}
+{#                            const dropdownItems = document.querySelectorAll('.dropdown-item');#}
+{##}
+{#                            dropdownItems.forEach(item => {#}
+{#                              item.addEventListener('click', (event) => {#}
+{#                                selectedRoleInput.value = event.target.dataset.role;#}
+{#                              });#}
+{#                            });#}
+{##}
+{#                      </script>#}
+{##}
+{#                      {{ form.hidden_tag() }}  <div class="form-group">#}
+{#                        <label>Nom</label>#}
+{#                        <input type="text" class="form-control p_input">#}
+{#                      </div>#}
+{#                      <div class="form-group">#}
+{#                        <label>Prenom</label>#}
+{#                        <input type="text" class="form-control p_input">#}
+{#                      </div>#}
+{#                      <div class="form-group">#}
+{#                        <label>Email</label>#}
+{#                        <input type="email" class="form-control p_input">#}
+{#                      </div>#}
+{##}
+{#                      <div class="form-group">#}
+{#                        <label>Entrez un mot de passe</label>#}
+{#                        <input type="password" class="form-control p_input">#}
+{#                      </div>#}
+{#                      <div class="form-group">#}
+{#                        <label>Reentrez le mot de passe</label>#}
+{#                        <input type="password" class="form-control p_input">#}
+{#                      </div>#}
+{#                      <div class="form-group d-flex align-items-center justify-content-between">#}
+{#                        <div class="form-check">#}
+{#                          <label class="form-check-label">#}
+{#                            <input type="checkbox" class="form-check-input"> Remember me </label>#}
+{#                        </div>#}
+{#                        <a href="#" class="forgot-pass">Forgot password</a>#}
+{#                      </div>#}
+{#                      <div class="text-center">#}
+{#                        <button type="submit" class="btn btn-primary btn-block enter-btn">S'inscrire</button>#}
+{#                      </div>#}
+{#                      <p class="sign-up text-center">Vous avez deja un compte?<a href="{{ url_for('login') }}"> Se connecter</a></p>#}
+{#                      <p class="terms">En creant le compte vous acceptez nos <a href="#"> Règles de confidentialité et conditions d'utilisation</a></p>#}
+{#                    </form>#}
+
+                <form action="{{ url_for('register') }}" method="POST">
+                <div class="msg" style="color: red">{{ msg }}</div>
+                <div class="dropdown show">
+                    <label for="role">Choisir role :</label>
+                    <select id="role" name="role">
+                      <option value="admin">Admin</option>
+                      <option value="student">Etudiant</option>
+                      <option value="teacher">Enseignant</option>
+                    </select>
+
+                </div>
+
+                    <div class="form-group">
+                      <label for="lastname" >Nom *</label>
+                      <input type="text" class="form-control p_input" name="lastname" id="lastname">
+{##}
+{#                      {% if form.lastname.errors %}#}
+{#                        <span class="error">{{ form.lastname.errors[0] }}</span>#}
+{#                      {% endif %}#}
+                    </div>
+
+                    <div class="form-group">
+                    <label for="firstname">Prenom</label>
+                    <input type="text" class="form-control p_input" name="firstname" id="firstname">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control p_input" name="email" id="email">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="password">Entrez un mot de passe</label>
+                    <input type="password" class="form-control p_input" name="password" id="password">
+                  </div>
+
+                    <div class="form-group">
+                    <label for="confirmPassword">Reentrez le mot de passe</label>
+                    <input type="password" class="form-control p_input" name="confirmPassword" id="confirmPassword">
+                  </div>
+
+{#                  <div class="form-group d-flex align-items-center justify-content-between">#}
+{#                    <div class="form-check">#}
+{#                      <label class="form-check-label">#}
+{#                        <input type="checkbox" class="form-check-input"> Remember me </label>#}
+{#                    </div>#}
+{#                    <a href="#" class="forgot-pass">Forgot password</a>#}
+{#                  </div>#}
+
+                  <div class="text-center">
+                    <button type="submit" class="btn btn-primary btn-block enter-btn" name="submit" id="submit">S'inscire</button>
+                  </div>
+
+                  <p class="sign-up text-center">Vous avez deja un compte?<a href="{{ url_for('login') }}"> Se connecter</a></p>
+                  <p class="terms">En creant le compte vous acceptez nos <a href="#"> Règles de confidentialité et conditions d'utilisation</a></p>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- content-wrapper ends -->
+        </div>
+        <!-- row ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="{{ url_for('static', filename='corona/assets/vendors/js/vendor.bundle.base.js')}}"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="{{ url_for('static', filename='corona/assets/js/off-canvas.js')}}"></script>
+    <script src="{{ url_for('static', filename='corona/assets/js/hoverable-collapse.js')}}"></script>
+    <script src="{{ url_for('static', filename='corona/assets/js/misc.js')}}"></script>
+    <script src="{{ url_for('static', filename='corona/assets/js/settings.js')}}"></script>
+    <script src="{{ url_for('static', filename='corona/assets/js/todolist.js')}}"></script>
+    <!-- endinject -->
+  </body>
+</html>

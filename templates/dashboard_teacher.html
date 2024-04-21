@@ -1,0 +1,52 @@
+{% extends 'home_teacher.html' %}
+
+{% block bodyContent %}
+{#<div class="main-panel">#}
+{#    <div class="align-items-center">#}
+        {% if hasCourse %}
+            <div class="row ">
+              <div class="col-12 grid-margin">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Tous mes cours</h4>
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th> Intitule </th>
+                            <th> Institution </th>
+                            <th> Statut </th>
+                            <th> Ouverture </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        {% for course in courses %}
+                          <tr>
+                            <td> {{ course.get_title() }} </td>
+                            <td> {{ course.get_institution_name() }} </td>
+                              {% if course.get_confirmation_status() == True %}
+                                <td>
+                                  <div class="badge badge-outline-success">Approuve</div>
+                                </td>
+                                  <td> Ouverture </td>
+                              {% else %}
+                                <td>
+                                  <div class="badge badge-outline-warning">En attente</div>
+                                </td>
+                                   <td>  </td>
+                              {% endif %}
+                          </tr>
+                        {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        {% else %}
+            <h3>Vous n'avez pas encore un cours, <a href="{{ url_for('createCours') }}">cliquez ici</a> pour en creer</h3>
+        {% endif %}
+{#    </div>#}
+{#</div>#}
+{% endblock %}

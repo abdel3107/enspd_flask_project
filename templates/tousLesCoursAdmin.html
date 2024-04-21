@@ -1,0 +1,50 @@
+{% extends 'home_admin.html' %}
+
+{% block bodyContent %}
+ {% if hasCourse %}
+            <div class="row ">
+              <div class="col-12 grid-margin">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Tous les cours</h4>
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th> Intitule </th>
+                            <th> Enseignant </th>
+                            <th> Email de l'enseigant </th>
+                            <th> Statut(Cliquez pour changer d'etat) </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        {% for course in courses %}
+                          <tr>
+                            <td> {{ course.get_title() }} </td>
+                            <td> {{ course.get_teacher_name() }} </td>
+                            <td> {{ course.get_teacher_email() }} </td>
+                              {% if course.get_confirmation_status() == True %}
+                                <td>
+                                  <div class="badge badge-outline-success">Approved</div>
+                                </td>
+                              {% else %}
+                                <td>
+                                <form action="{{ url_for('approve') }}" method="post">
+                                    <input type="hidden" id="course_id" name="course_id" value="{{ course.get_id() }}"></input>
+                                  <button type="submit" class="btn btn-inverse-warning btn-fw">En attente</button>
+                                </form>
+                                </td>
+                              {% endif %}
+                          </tr>
+                        {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        {% else %}
+            <h3> Il n'y a pas encore eu de cours </h3>
+        {% endif %}
+{% endblock %}
