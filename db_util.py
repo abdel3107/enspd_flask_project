@@ -10,11 +10,11 @@ def connect_to_db():
     """Connects to the PostgreSQL database and returns a connection object."""
     try:
         connection = psycopg2.connect(
-            database="EduApp",
-            user="postgres",
-            password="Alima",
-            host="localhost",
-            port="5432",  # Default PostgreSQL port
+            database=,
+            user=,
+            password=,
+            host=,
+            port=,  # Default PostgreSQL port
         )
         return connection
     except (Exception, psycopg2.Error) as error:
