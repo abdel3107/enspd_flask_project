@@ -19,3 +19,12 @@ class Institution(object):
 
     def get_name(self):
         return self.institution_name
+
+    def get_country(self):
+        return self.country
+
+    def get_town(self):
+        return self.town
+
+    def get_website(self):
+        return self.website

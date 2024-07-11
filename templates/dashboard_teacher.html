@@ -28,7 +28,12 @@
                                 <td>
                                   <div class="badge badge-outline-success">Approuve</div>
                                 </td>
-                                  <td> Ouverture </td>
+                                  <td>
+                                    <form action="{{ url_for('course_content') }}" method="post">
+                                        <input type="hidden" id="course_id" name="course_id" value="{{ course.get_id() }}"></input>
+                                            <button type="submit" class="btn btn-inverse-success btn-fw">Ouverture</button>
+                                    </form>
+                                  </td>
                               {% else %}
                                 <td>
                                   <div class="badge badge-outline-warning">En attente</div>

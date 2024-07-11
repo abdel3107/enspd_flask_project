@@ -1,0 +1,39 @@
+{% extends "home_teacher.html" %}
+{% block bodyContent %}
+    <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Ajout du contenu</h4>
+                    <p class="card-description"> Veuillez remplir le formulaire </p>
+                      <span style="color: red">{{ msg }}</span>
+                    <form class="forms-sample" action="{{ url_for('content') }}" method="post">
+                        <div class="form-group">
+                          <label for="content_type">Choisisses le type</label>
+                          <select class="js-example-basic-single" name="content_type" id="content_type" style="width:100%">
+{#                              {% for institution in institutions %}#}
+{#                                <option value="{{ institution.get_id() }}">{{ institution.get_name() }}</option>#}
+{#                              {% endfor %}#}
+                              <option value="text"> Texte </option>
+                              <option value="video"> Video </option>
+                              <option value="pdf"> PDF </option>
+                              <option value="picture"> Image </option>
+                          </select>
+                        </div>
+                        <input type="hidden" name="course_id" value="{{ course.get_id() }}">
+{#                        <div class="form-group">#}
+{#                        <label for="title">Intitule</label>#}
+{#                        <input type="text" class="form-control" id="title" name="title" placeholder="Exemple: MODELISATION UML">#}
+{#                        </div>#}
+                      <div class="form-group">
+                        <label for="content_data"> Contenu(Pour les medias ajoutez le lien) </label>
+                        <textarea class="form-control" id="content_data" name="content_data" rows="4"></textarea>
+{#                          {% count = 200 %}#}
+{#                          <span>word characters: {{ 230 }}</span>#}
+                      </div>
+                      <button type="submit" class="btn btn-primary mr-2" name="submit" id="submit">Soumettre</button>
+{#                      <button class="btn btn-dark">Cancel</button>#}
+                    </form>
+                  </div>
+                </div>
+            </div>
+{% endblock %}

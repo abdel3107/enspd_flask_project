@@ -18,6 +18,24 @@ def create_tables_if_needed():
         close_connection(connection)
 
 
+@app.route("/student_home_institutions")
+def student_home_institutions():
+    if session["role"] == 'student':
+        institutions = get_all_institutions()
+        # idTest = institutions[0].get_id()
+        # print("The type of id is: ", type(idTest))
+        return render_template("student_home_institutions.html", institutions=institutions)
+    return render_template("index.html")
+
+
+@app.route("/student_home_courses")
+def student_home_courses():
+    if session["role"] == 'student':
+        courses = get_all_courses_student()
+        return render_template("student_home_courses.html", courses=courses)
+    return render_template("index.html")
+
+
 @app.route("/createCours", methods=["GET", "POST"])
 def createCours():
     msg = ''
@@ -37,6 +55,53 @@ def createCours():
         msg = 'Bravo !'
         return redirect(url_for('dashboard_teacher'))
     return render_template("createCours.html", msg=msg, institutions=institutions)
+
+
+@app.route('/student_view_institution_courses/<int:inst>')
+def student_view_institution_courses(inst):
+    courses = []
+    inst_id = inst
+    courses.extend(get_courses_by_institution(inst_id))
+    # print(courses)
+    return render_template("student_home_inst_courses.html", courses=courses)
+
+
+@app.route('/student_view_course_content/<int:courseId>')
+def student_view_course_content(courseId):
+    contents = get_course_content_by_course_id(courseId)
+    return render_template("student_view_course_content.html", contents=contents)
+
+
+@app.route('/course_content', methods=['POST'])
+def course_content():
+    contents = []
+    if request.method == 'POST' and 'course_id' in request.form:
+        course_id = request.form['course_id']
+        course = get_course_by_course_id(course_id)
+        contents = get_course_content_by_course_id(course_id)
+        print(contents)
+        return render_template('course_content.html', course=course, contents=contents)
+    else:
+        return redirect(url_for('dashboard_teacher'))
+
+
+@app.route('/create_course_content', methods=['POST'])
+def create_course_content():
+    if request.method == 'POST' and 'course_id' in request.form:
+        course_id = request.form['course_id']
+        course = get_course_by_course_id(course_id)
+        return render_template('create_course_content.html', course=course)
+
+
+@app.route('/content', methods=['POST'])
+def content():
+    if request.method == 'POST' and 'course_id' in request.form and 'content_type' in request.form and 'content_data' in request.form:
+        course_id = request.form['course_id']
+        content_type = request.form['content_type']
+        content_data = request.form['content_data']
+        # course = get_course_by_course_id(course_id)
+        insert_course_content(course_id, content_type, content_data)
+        return redirect(url_for('dashboard_teacher'))
 
 
 @app.route("/createInst", methods=['GET', 'POST'])
@@ -152,6 +217,7 @@ def choose_teacher():
 
 
 @app.route('/')
+# @app.route('/index')
 def home():
     if 'email' in session and session['role'] == 'admin':
         return redirect(url_for('dashboard_admin'))

@@ -1,6 +1,7 @@
 import psycopg2
 
 from models.course import Course
+from models.course_content import Content
 from models.institutions import Institution
 from models.teacher import Teacher
 
@@ -109,6 +110,7 @@ def get_teacher_id(user_id):
     finally:
         cursor.close()
 
+
 def change_course_status(course_id):
     connection = connect_to_db()
     cursor = connection.cursor()
@@ -123,6 +125,7 @@ def change_course_status(course_id):
         print("Error changing status:", error)
     finally:
         cursor.close()
+
 
 def get_teacher(teacher_id):
     connection = connect_to_db()
@@ -159,6 +162,43 @@ def get_courses_by_teacher(teacher_id):
         return None
     finally:
         cursor.close()
+
+
+def get_course_by_course_id(course_id):
+    connection = connect_to_db()
+    cursor = connection.cursor()
+    try:
+        query = """SELECT * FROM course WHERE course_id = %s """
+        cursor.execute(query, (course_id,))
+        response = cursor.fetchone()
+        course = Course(*response)
+        return course
+    except (Exception, psycopg2.Error) as error:
+        print("Error getting course by course_id: ", error)
+    finally:
+        cursor.close()
+
+
+def get_course_content_by_course_id(course_id):
+    course_contents = []
+    connection = connect_to_db()
+    cursor = connection.cursor()
+    try:
+        query = """SELECT content_id, course_id, content_type, content_data FROM content WHERE course_id = %s"""
+        cursor.execute(query, (course_id,))
+        response = cursor.fetchall()
+        # print(response)
+        for element in response:
+            # print(element)
+            course_content = Content(*element)
+            course_contents.append(course_content)
+        return course_contents
+    except (Exception, psycopg2.Error) as error:
+        print("Error getting courses content : ", error)
+    finally:
+        cursor.close()
+
+
 def get_courses_by_admin(admin_id):
     courses = []
     connection = connect_to_db()
@@ -175,6 +215,47 @@ def get_courses_by_admin(admin_id):
         return courses
     except (Exception, psycopg2.Error) as error:
         print("Error geting courses by admin:", error)
+        return None
+    finally:
+        cursor.close()
+
+
+def get_courses_by_institution(inst_id):
+    courses = []
+    connection = connect_to_db()
+    cursor = connection.cursor()
+    try:
+        query = """ SELECT course_id, teacher_id, inst_id, title, description, is_confirmed FROM course
+                    WHERE (inst_id, is_confirmed) = (%s, %s) """
+        cursor.execute(query, (inst_id, 'true'))
+        response = cursor.fetchall()
+        print("response : ", response)
+        for element in response:
+            course = Course(*element)
+            courses.append(course)
+        return courses
+    except (Exception, psycopg2.Error) as error:
+        print("Error geting courses by institution:", error)
+        return None
+    finally:
+        cursor.close()
+
+def get_all_courses_student():
+    courses = []
+    connection = connect_to_db()
+    cursor = connection.cursor()
+    try:
+        query = """ SELECT course_id, teacher_id, inst_id, title, description, is_confirmed FROM course
+                        WHERE is_confirmed = %s """
+        cursor.execute(query, ('true',))
+        response = cursor.fetchall()
+        print("response : ", response)
+        for element in response:
+            course = Course(*element)
+            courses.append(course)
+        return courses
+    except (Exception, psycopg2.Error) as error:
+        print("Error geting all courses for student:", error)
         return None
     finally:
         cursor.close()
@@ -207,6 +288,21 @@ def insert_course(connection, teacher_id, inst_id, title, description, is_confir
     except (Exception, psycopg2.Error) as error:
         print("Error inserting course :", error)
         return None
+    finally:
+        cursor.close()
+
+
+def insert_course_content(course_id, content_type, content_data):
+    connection = connect_to_db()
+    cursor = connection.cursor()
+    try:
+        insert_query = """ INSERT INTO content (course_id, content_type, content_data)
+                            VALUES (%s, %s, %s);
+                            """
+        cursor.execute(insert_query, (course_id, content_type, content_data))
+        connection.commit()
+    except (Exception, psycopg2.Error) as error:
+        print("Error inserting course content : ", error)
     finally:
         cursor.close()
 

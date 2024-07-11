@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS content (
   course_id INT,
   FOREIGN KEY (course_id) REFERENCES course(course_id),
   content_type VARCHAR(255) NOT NULL,
-  content_data VARCHAR(255)
+  content_data TEXT
 );
 
 CREATE TABLE IF NOT EXISTS student (
